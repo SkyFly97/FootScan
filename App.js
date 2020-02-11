@@ -2,24 +2,12 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
 import { Table, Row, Rows } from 'react-native-table-component';
 import * as SQLite from 'expo-sqlite';
-import Constants from 'expo-constants';
-import { Asset } from "expo-asset";
-import * as FileSystem from "expo-file-system";
-
-
+import Constants from "expo-constants";
 
 const db = SQLite.openDatabase('TablRozmir.db')
  
 export default class ExampleOne extends Component {
   constructor(props) {
-
-	
-	
-	FileSystem.downloadAsync(
-    	Asset.fromModule(require('./assets/db/TablRozmir.db')).uri,
-		`${FileSystem.documentDirectory}SQLite/TablRozmir.db`
-	
-	); 
      
     super(props);
     this.state = {
@@ -27,46 +15,18 @@ export default class ExampleOne extends Component {
   };
   
   db.transaction((tx) => {
-    this.setState({ClassicSize: ''});
-    tx.executeSql('SELECT * FROM FootScan where FootSize=?', ['28'], (tx, result) => {
-      console.log (result);
-      const len = result.rows.length;
+    tx.executeSql('SELECT * FROM Classic WHERE footsize=?', ['lol'], (tx, result) => {
+      const len = result.rows.lenght;
       	if(len > 0) {
-            const row = result.rows.item(0);
-            this.setState({ClassicSize: row.ClassicSize});
-        }
-    }, (tx, result) => {
-      console.log (result);
+		const row = result.row.item(0);
+		this.setState({ClassicSize: row.ClassicSize});
+    	}
     });
   });
 }  
            
-
-     
-  render() {
-    return (
-		<View style={styles.container}>
-       
-       <Text>Foot Scan</Text>
-       <Text>{'Foot Size is ' + this.state.ClassicSize}</Text>
-       
-
-      </View>
- 
-    );
-  }
-  }
-
- 
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 10, paddingTop: 30, backgroundColor: '#fff' },
-  head: { height: 100, backgroundColor: '#f1f8ff' },
-  text: { margin: 1 }
-});
-
-
-
- /*tableHead: ['Класичний розмір', 'Європейський розмір', 'US Men', 'US Women', 'UK', 'Довжина стопи(см)', 'Довжина устілки(см)' ],
+    
+      /*tableHead: ['Класичний розмір', 'Європейський розмір', 'US Men', 'US Women', 'UK', 'Довжина стопи(см)', 'Довжина устілки(см)' ],
       tableData: [
         ['35', '36 EUR', '-', '5', '3.5', '21.7', '22.2'],
         ['35.5', '36 2/3 EUR', '-', '5.5', '4', '22.2', '22.5'],
@@ -96,3 +56,23 @@ const styles = StyleSheet.create({
     }
   }
  */
+  render() {
+    return (
+		<View style={styles.container}>
+       
+       <Text>Foot Scan</Text>
+       <Text>{'lol Foot Size is ' + this.state.ClassicSize}</Text>
+       
+
+      </View>
+ 
+    );
+  }
+  }
+
+ 
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 10, paddingTop: 30, backgroundColor: '#fff' },
+  head: { height: 100, backgroundColor: '#f1f8ff' },
+  text: { margin: 1 }
+});

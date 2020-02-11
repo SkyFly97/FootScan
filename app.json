@@ -17,6 +17,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "packagerOpts": {
+      "assetExts": ["db"]
+    },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
