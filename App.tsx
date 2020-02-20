@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, ScrollView } from 'react-native';
-import { Table, Row, Rows } from 'react-native-table-component';
 import * as SQLite from 'expo-sqlite';
 import Constants from 'expo-constants';
 import { Asset } from "expo-asset";
@@ -32,7 +31,8 @@ export default class ExampleOne extends Component {
   
   db.transaction((tx) => {
     this.setState({ClassicSize: '', EUSize: '', USMen: '', USWomen: '', UK: '', InsoleSize: '',});
-    tx.executeSql('SELECT * FROM FootScan where FootSize=?', ['26'], (tx, result) => {
+    tx.executeSql('SELECT * FROM FootScan where FootSize=?', ['25,5'], (tx, result) => {
+    	console.log (result);
       const len = result.rows.length;
       	if(len > 0) {
             const row = result.rows.item(0);
@@ -42,9 +42,8 @@ export default class ExampleOne extends Component {
     );
   });
 }  
-           
 
-     
+
   render() {
     return (
 		<View style={styles.container}>
