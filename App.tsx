@@ -18,26 +18,28 @@ export default class ExampleOne extends Component {
 	FileSystem.downloadAsync(
     	Asset.fromModule(require('./assets/db/TablRozmir.db')).uri,
 		`${FileSystem.documentDirectory}SQLite/TablRozmir.db`
-	
 	); 
      
     super(props);
     this.state = {
-    ClassicSize: "",
+    ClassicSize: '', 
+    EUSize: '',
+    USMen: '',
+    USWomen: '',
+    UK: '',
+    InsoleSize: '',
   };
   
   db.transaction((tx) => {
-    this.setState({ClassicSize: ''});
-    tx.executeSql('SELECT * FROM FootScan where FootSize=?', ['28'], (tx, result) => {
-      console.log (result);
+    this.setState({ClassicSize: '', EUSize: '', USMen: '', USWomen: '', UK: '', InsoleSize: '',});
+    tx.executeSql('SELECT * FROM FootScan where FootSize=?', ['26'], (tx, result) => {
       const len = result.rows.length;
       	if(len > 0) {
             const row = result.rows.item(0);
-            this.setState({ClassicSize: row.ClassicSize});
+            this.setState({ClassicSize: row.ClassicSize, EUSize: row.EUSize, USMen: row.USMen, USWomen: row.USWomen, UK: row.UK, InsoleSize: row.InsoleSize,});
         }
-    }, (tx, result) => {
-      console.log (result);
-    });
+    }, 
+    );
   });
 }  
            
@@ -46,11 +48,13 @@ export default class ExampleOne extends Component {
   render() {
     return (
 		<View style={styles.container}>
-       
        <Text>Foot Scan</Text>
-       <Text>{'Foot Size is ' + this.state.ClassicSize}</Text>
-       
-
+       <Text>{'Класичний розмір - ' + this.state.ClassicSize}</Text>
+       <Text>{'Європейський розмір - ' + this.state.EUSize}</Text>
+       <Text>{'Американський чоловічий - ' + this.state.USMen}</Text>
+       <Text>{'Американський жіночий - ' + this.state.USWomen}</Text>
+       <Text>{'Англійський - ' + this.state.UK}</Text>
+       <Text>{'Розмір устілки - ' + this.state.InsoleSize}</Text>
       </View>
  
     );
@@ -90,8 +94,6 @@ const styles = StyleSheet.create({
         ['47', '48 2/3 EUR', '13.5', '14.5', '13', '30.1', '31.5'],
         ['48', '49 1/3 EUR', '14', '15', '13.5', '30.5', '32'],
        
-
-
       ]
     }
   }
